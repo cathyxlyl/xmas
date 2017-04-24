@@ -1,2 +1,2 @@
 # xmas
-A tool for modeling analysis.
+A python tool for modeling analysis.
