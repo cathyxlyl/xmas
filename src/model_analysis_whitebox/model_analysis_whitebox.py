@@ -146,7 +146,8 @@ class ModelAnalysisWhiteBox(object):
         Returns
         -------
         feature_importances_predict: ndarray, shape = (n_features)
-            The feature importances of the model during predicting stage.
+            The feature importances of the model during predicting stage. 
+            You can use plt.show() to show the chart.
         """
 
         return self.model_analysis.feature_importances_predict_stage(model, x_sample, change)
@@ -154,7 +155,7 @@ class ModelAnalysisWhiteBox(object):
     def inter_feature_importances(self, model):
         """Compute current feature importances after every stage.
             Imitate the implementation of method 'feature_importances_' in gradient_boosting.
-            Only implemented for gbdt models (or say boosting methods).
+            Only implemented for gbdt models (or say boosting models).
         
         Parameters
         ----------
@@ -188,8 +189,8 @@ class ModelAnalysisWhiteBox(object):
         Returns
         -------
         line_chart: matplotlib.lines.Line2D
-            The line chart which represent the feature importance trend with 
-            the change of training stages.
+            The line chart which represent the feature importance trend with the change of training stages.
+            You can use plt.show() to show the chart.
         """
 
         return self.model_analysis.feature_importance_trend_plotter(inter_fi, i, feature_name, line_format)
@@ -213,7 +214,7 @@ class ModelAnalysisWhiteBox(object):
 
     def tree_split_points_plotter(self, splits_points, feature_name, fs_min=None, fs_max=None, bins=5, value='abs',
                                   bar_format='b', line_format='k--', dot_format='mo'):
-        """Visualize the distribution of the chosen feature.
+        """Visualize the distribution of the chosen feature's split points.
             General methods for tree models.
 
         Parameters
@@ -242,6 +243,7 @@ class ModelAnalysisWhiteBox(object):
         Returns
         -------
         chart: matplotlib.lines.Line2D
+            The distribution of the chosen feature's split points.
             You can use plt.show() to show the chart.
         """
 
