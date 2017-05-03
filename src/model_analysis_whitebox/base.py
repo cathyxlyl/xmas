@@ -48,13 +48,15 @@ class BaseModelAnalysis(object):
         for i, index in enumerate(remove_features):
             x_copy[:, index] = features_default[i]
         return model.predict(x_copy)
-    
+
 
 #######################################################################################################################
 class RegressionModelAnalysis(BaseModelAnalysis):
     """Base class for regression model analysis"""
-            
+    pass
+
 
 #######################################################################################################################
 class ClassificationModelAnalysis(BaseModelAnalysis):
     """Base class for classification model analysis"""
+    pass

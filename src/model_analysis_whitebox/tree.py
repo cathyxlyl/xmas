@@ -33,6 +33,20 @@ class TreeModelAnalysis(BaseModelAnalysis):
 
         raise NotImplementedError("Not Implemented. Please use this method in subclasses.")
 
+    @classmethod
+    def feature_importance_trend_plotter(cls, inter_fi, i, feature_name, line_format='g'):
+
+        # get the importances of the chosen feature
+        fii = inter_fi[:, i]
+        n_stages = len(fii)
+        x = range(1, n_stages + 1)
+
+        line_chart = plt.plot(x, fii, line_format, alpha=0.7)
+        plt.xlabel(feature_name)
+        plt.ylabel('feature importance')
+        plt.title('Feature Importance Trend For %s With Training Stages' % (feature_name.capitalize()))
+        return line_chart
+
     @classmethod 
     def tree_splits_points(cls, model):
 
@@ -55,8 +69,8 @@ class TreeModelAnalysis(BaseModelAnalysis):
         return np.array(splits_points)
 
     @classmethod
-    def tree_splits_points_plotter(cls, split_points, feature_name, fs_min=None, fs_max=None, bins=5, value='abs',
-                                   bar_format='b', line_format='k--', dot_format='mo'):
+    def tree_split_points_plotter(cls, split_points, feature_name, fs_min=None, fs_max=None, bins=5, value='abs',
+                                  bar_format='b', line_format='k--', dot_format='mo'):
 
         if len(split_points) < 1:
             return None
@@ -114,7 +128,7 @@ class TreeModelAnalysis(BaseModelAnalysis):
         return [chart, dot]
         
 
-################################################################################
+#######################################################################################################################
 class RegressionTreeModelAnalysis(TreeModelAnalysis, RegressionModelAnalysis):
     """Class for regression tree model analysis"""
 
@@ -143,9 +157,8 @@ class RegressionTreeModelAnalysis(TreeModelAnalysis, RegressionModelAnalysis):
         return np.array(total_sum) / np.array(total_sum).sum()
     
     
-################################################################################
-class ClassificationTreeModelAnalysis(TreeModelAnalysis, 
-                                      ClassificationModelAnalysis):
+#######################################################################################################################
+class ClassificationTreeModelAnalysis(TreeModelAnalysis, ClassificationModelAnalysis):
     """Class for classification tree model analysis"""
 
     @classmethod

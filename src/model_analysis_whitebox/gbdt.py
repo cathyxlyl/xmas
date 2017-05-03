@@ -2,6 +2,7 @@
 
 from sklearn.ensemble.gradient_boosting import BaseGradientBoosting
 from sklearn.ensemble.gradient_boosting import LeastSquaresError
+
 from .tree import *
 
 
@@ -69,20 +70,6 @@ class GBDTModelAnalysis(TreeModelAnalysis):
             feature_importances_inter.append(inter_importances)
         return np.array(feature_importances_inter)
 
-    @classmethod
-    def feature_importance_trend_plotter(cls, inter_fi, i, feature_name, line_format='g'):
-
-        # get the importances of the chosen feature
-        fii = inter_fi[:, i]
-        n_stages = len(fii)
-        x = range(1, n_stages + 1)
-
-        line_chart = plt.plot(x, fii, line_format, alpha=0.7)
-        plt.xlabel(feature_name)
-        plt.ylabel('feature importance')
-        plt.title('Feature Importance Trend For %s With Training Stages' % (feature_name.capitalize()))
-        return line_chart
-
     @classmethod 
     def tree_splits_points(cls, model):
 
@@ -108,15 +95,13 @@ class GBDTModelAnalysis(TreeModelAnalysis):
         return np.array(splits_points)
 
 
-################################################################################
-class RegressionGBDTModelAnalysis(GBDTModelAnalysis, 
-                                  RegressionTreeModelAnalysis):
+#######################################################################################################################
+class RegressionGBDTModelAnalysis(GBDTModelAnalysis, RegressionTreeModelAnalysis):
     """Class for gradient boosting regression model analysis"""
     pass
     
     
-################################################################################
-class ClassificationGBDTModelAnalysis(GBDTModelAnalysis,
-                                      ClassificationTreeModelAnalysis):
+#######################################################################################################################
+class ClassificationGBDTModelAnalysis(GBDTModelAnalysis, ClassificationTreeModelAnalysis):
     """Class for gradient boosting classification model analysis"""
     pass
