@@ -5,6 +5,7 @@ import pandas as pd
 
 from .continuous_variable_analysis import ContinuousVariableAnalysis
 from .discrete_variable_analysis import DiscreteVariableAnalysis
+from .outlier_analysis import ContinuousOutlierAnalysis, DiscreteOutlierAnalysis
 
 
 class VariableAnalysis(object):
@@ -19,6 +20,8 @@ class VariableAnalysis(object):
     data_type = None
     # Define the analyzer
     analyzer = None
+    # Define the outlier analyzer
+    outlier = None
 
     def __init__(self, data, name, data_type='discrete', missing=None):
         """Initialize variable analysis class.
@@ -29,9 +32,9 @@ class VariableAnalysis(object):
             The variable data that we want to analyze.
         name: str
             The name of this variable.
-        data_type: {'discrete', 'continuous'}
+        data_type: {'discrete', 'continuous'}, optimal, (default='discrete')
             Whether the data is discrete data or continuous data.
-        missing: list
+        missing: list, optimal, (default='None')
             Missing values of the variable.
         """
 
@@ -55,8 +58,10 @@ class VariableAnalysis(object):
             self.data_type = data_type
             if self.data_type == 'continuous':
                 self.analyzer = ContinuousVariableAnalysis(self.data, self.name, self.missing)
+                self.outlier = ContinuousOutlierAnalysis(self.analyzer)
             if self.data_type == 'discrete':
                 self.analyzer = DiscreteVariableAnalysis(self.data, self.name, self.missing)
+                self.outlier = DiscreteOutlierAnalysis(self.analyzer)
         else:
             raise ValueError("The label data type must either be 'discrete' or 'continuous'.")
 
@@ -70,3 +75,7 @@ class VariableAnalysis(object):
     def get_analyzer(self):
 
         return self.analyzer
+
+    def get_outlier(self):
+
+        return self.outlier
